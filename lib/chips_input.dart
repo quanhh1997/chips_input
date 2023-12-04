@@ -72,6 +72,7 @@ class ChipsInput<T extends Object> extends StatefulWidget {
     this.scrollController,
     this.scrollPhysics,
     this.restorationId,
+    this.popupHeight = 200,
   })  : assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
@@ -481,6 +482,8 @@ class ChipsInput<T extends Object> extends StatefulWidget {
   /// default.
   final AutocompleteOptionsViewBuilder<T>? optionsViewBuilder;
 
+  final double popupHeight;
+
   @override
   ChipsInputState<T> createState() => ChipsInputState<T>();
 }
@@ -604,6 +607,7 @@ class ChipsInputState<T extends Object> extends State<ChipsInput<T>>
     Widget _defaultOptionsViewBuilder(BuildContext context,
         AutocompleteOnSelected<T> onSelected, Iterable<T> options) {
       return _DefaultOptionsViewBuilder(
+        popupHeight: widget.popupHeight,
         onSelected: onSelected,
         options: options,
         suggestionBuilder: widget.suggestionBuilder!,
@@ -732,6 +736,7 @@ class _DefaultOptionsViewBuilder<T extends Object> extends StatelessWidget {
     required this.onSelected,
     required this.options,
     required this.suggestionBuilder,
+    required this.popupHeight,
   }) : super(key: key);
 
   final AutocompleteOnSelected<T> onSelected;
@@ -739,6 +744,7 @@ class _DefaultOptionsViewBuilder<T extends Object> extends StatelessWidget {
   final Iterable<T> options;
 
   final SuggestionBuilder<T> suggestionBuilder;
+  final double popupHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -747,7 +753,7 @@ class _DefaultOptionsViewBuilder<T extends Object> extends StatelessWidget {
       child: Material(
         elevation: 4.0,
         child: Container(
-          height: 200.0,
+          height: popupHeight,
           child: ListView.builder(
             padding: EdgeInsets.all(8.0),
             itemCount: options.length,
