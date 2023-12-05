@@ -750,22 +750,26 @@ class _DefaultOptionsViewBuilder<T extends Object> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topLeft,
-      child: Material(
-        elevation: 4.0,
-        child: Container(
-          height: popupHeight,
-          child: ListView.builder(
-            padding: EdgeInsets.all(8.0),
-            itemCount: options.length,
-            itemBuilder: (BuildContext context, int index) {
-              final T option = options.elementAt(index);
-              return GestureDetector(
-                onTap: () {
-                  onSelected(option);
-                },
-                child: suggestionBuilder(context, option),
-              );
-            },
+      child: GestureDetector(
+        onTap: () {},
+        behavior: HitTestBehavior.deferToChild,
+        child: Material(
+          elevation: 4.0,
+          child: Container(
+            height: popupHeight,
+            child: ListView.builder(
+              padding: EdgeInsets.all(8.0),
+              itemCount: options.length,
+              itemBuilder: (BuildContext context, int index) {
+                final T option = options.elementAt(index);
+                return GestureDetector(
+                  onTap: () {
+                    onSelected(option);
+                  },
+                  child: suggestionBuilder(context, option),
+                );
+              },
+            ),
           ),
         ),
       ),
